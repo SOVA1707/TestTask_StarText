@@ -1,5 +1,7 @@
 package com.startext.testtask.entity;
 
+import org.springframework.data.annotation.Transient;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,8 +12,8 @@ import java.util.UUID;
 @Entity
 public class ArtifactEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @Transient
+    private UUID id = UUID.randomUUID();
     private LocalDateTime created;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String userId;
@@ -20,19 +22,30 @@ public class ArtifactEntity {
 
     public ArtifactEntity() {
         created = LocalDateTime.now();
-        System.out.println(created);
     }
 
     public UUID getId() {
         return id;
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public LocalDateTime getCreated() {
         return created;
     }
 
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
     public String getUserId() {
         return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getCategory() {
