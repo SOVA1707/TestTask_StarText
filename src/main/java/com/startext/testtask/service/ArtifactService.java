@@ -56,6 +56,7 @@ public class ArtifactService {
     public Artifact deleteArtifact(UUID id) throws ArtifactNotFoundException {
         Optional<ArtifactEntity> optionalArtifact = artifactRepository.findById(id);
         if (optionalArtifact.isPresent()) {
+            // HHH000010: On release of batch it still contained JDBC statements
             artifactRepository.deleteById(id);
             return Artifact.toModel(optionalArtifact.get());
         } else {
