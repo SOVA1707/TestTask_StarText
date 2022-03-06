@@ -26,6 +26,10 @@ public class ArtifactService {
     }
 
     public Artifact getArtifact(UUID id) throws ArtifactNotFoundException {
+        //If findBySuuid is executed first, then findById will be executed.
+        //Otherwise, findById will not find anything.
+        //Check uuid id annotation.
+        artifactRepository.findBySuuid(id.toString());
         Optional<ArtifactEntity> optionalArtifact = artifactRepository.findById(id);
         if (optionalArtifact.isPresent()) {
             return Artifact.toModel(optionalArtifact.get());
