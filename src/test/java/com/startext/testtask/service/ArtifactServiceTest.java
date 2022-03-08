@@ -5,8 +5,6 @@ import com.startext.testtask.entity.ArtifactEntity;
 import com.startext.testtask.exception.ArtifactAlreadyExistException;
 import com.startext.testtask.exception.ArtifactNotFoundException;
 import com.startext.testtask.model.Artifact;
-import com.startext.testtask.repository.ArtifactRepository;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
