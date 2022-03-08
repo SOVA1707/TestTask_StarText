@@ -1,5 +1,7 @@
 package com.startext.testtask.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -7,7 +9,7 @@ import java.util.UUID;
 @Table(name = "comments")
 public class CommentEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonIgnore
     private UUID id;
     private UUID artifactId;
     private String userId;

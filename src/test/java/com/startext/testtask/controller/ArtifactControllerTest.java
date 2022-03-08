@@ -67,6 +67,8 @@ class ArtifactControllerTest {
         checkOk();
         response = artifactController.deleteArtifact(id);
         checkOk();
+        response = artifactController.deleteArtifact(id);
+        checkBad();
     }
 
     private static void checkOk() {

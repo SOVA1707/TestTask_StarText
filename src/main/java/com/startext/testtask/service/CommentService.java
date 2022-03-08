@@ -19,7 +19,6 @@ public class CommentService {
 
     public CommentEntity createComment(CommentEntity comment) throws CommentAlreadyExistException {
         if (commentRepository.findById(comment.getId()).isEmpty()) {
-            System.out.println(comment.getId());
             return commentRepository.save(comment);
         } else {
             throw new CommentAlreadyExistException();
@@ -30,7 +29,7 @@ public class CommentService {
         Optional<CommentEntity> optionalComment = commentRepository.findById(id);
         if (optionalComment.isPresent()) {
             return Comment.toModel(optionalComment.get());
-        }else {
+        } else {
             throw new CommentNotFoundException();
         }
     }
@@ -42,7 +41,7 @@ public class CommentService {
             commentEntity.setContent(newComment.getContent());
             commentRepository.save(commentEntity);
             return Comment.toModel(commentEntity);
-        }else {
+        } else {
             throw new CommentNotFoundException();
         }
     }
@@ -52,7 +51,7 @@ public class CommentService {
         if (optionalComment.isPresent()) {
             commentRepository.deleteById(id);
             return Comment.toModel(optionalComment.get());
-        }else {
+        } else {
             throw new CommentNotFoundException();
         }
     }
