@@ -1,16 +1,13 @@
 package com.startext.testtask.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.annotation.Transient;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
+@Table(name = "artifacts")
 public class ArtifactEntity {
     @Id
     @JsonIgnore //mb other annotation
@@ -24,7 +21,6 @@ public class ArtifactEntity {
     private String description;
 
     public ArtifactEntity() {
-        suuid = id.toString();
         created = LocalDateTime.now();
     }
 
