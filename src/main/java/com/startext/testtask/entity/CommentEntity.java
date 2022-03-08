@@ -13,8 +13,7 @@ public class CommentEntity {
     private String userId;
     private String content;
 
-    public CommentEntity(UUID artifactId) {
-        this.artifactId = artifactId;
+    public CommentEntity() {
     }
 
     public UUID getId() {

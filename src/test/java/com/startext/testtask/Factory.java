@@ -22,9 +22,8 @@ public class Factory {
     }
 
     public static CommentEntity getCommentEntity() {
-        ArtifactEntity artifactEntity = getArtifactEntity();
-        CommentEntity commentEntity = new CommentEntity(artifactEntity.getId());
-        commentEntity.setId(UUID.randomUUID());
+        CommentEntity commentEntity = new CommentEntity();
+        commentEntity.setId(getArtifactEntity().getId());
         commentEntity.setUserId(String.valueOf(rand.nextInt()));
         commentEntity.setContent("Comment " + commentEntity.getId() + " content.");
         return commentEntity;

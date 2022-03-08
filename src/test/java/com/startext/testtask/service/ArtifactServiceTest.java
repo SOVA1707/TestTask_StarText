@@ -26,18 +26,17 @@ class ArtifactServiceTest {
         assertDoesNotThrow(() -> {
             artifactService.createArtifact(artifactEntity);
         }, "Throw exception.");
-        assertThrows(ArtifactAlreadyExistException.class, () -> artifactService.createArtifact(artifactEntity), "Artifact created twice.");
+        assertThrows(ArtifactAlreadyExistException.class, () -> artifactService.createArtifact(artifactEntity), "Artifact created twice");
     }
 
     @DisplayName("Get artifact test")
     @Test
     void getArtifact() {
-        assertThrows(ArtifactNotFoundException.class, () -> artifactService.getArtifact(artifactEntity.getId()));
         assertDoesNotThrow(() -> {
             artifactService.createArtifact(artifactEntity);
             Artifact artifact = artifactService.getArtifact(artifactEntity.getId());
             assertNotNull(artifact, "Artifact == null");
-        }, "Throw exception.");
+        }, "Throw exception");
     }
 
     @DisplayName("Update artifact test")
@@ -49,27 +48,24 @@ class ArtifactServiceTest {
             String newCategory = newArtifact.getCategory();
             String newDescription = newArtifact.getDescription();
 
-            assertThrows(ArtifactNotFoundException.class, () -> artifactService.updateArtifact(artifactEntity.getId(), newArtifact));
-
             artifactService.createArtifact(artifactEntity);
 
             Artifact artifact = artifactService.updateArtifact(artifactEntity.getId(), newArtifact);
 
-            assertNotNull(artifact, "Artifact == null.");
+            assertNotNull(artifact, "Artifact == null");
             assertEquals(artifact.getUserId(), newId, "Id != " + newId);
             assertEquals(artifact.getCategory(), newCategory, "Category != " + newCategory);
             assertEquals(artifact.getDescription(), newDescription, "Description != " + newDescription);
-        }, "Throw exception.");
+        }, "Throw exception");
     }
 
     @DisplayName("Delete artifact test")
     @Test
     void deleteArtifact() {
-        assertThrows(ArtifactNotFoundException.class, () -> artifactService.deleteArtifact(artifactEntity.getId()));
         assertDoesNotThrow(() -> {
             artifactService.createArtifact(artifactEntity);
             artifactService.deleteArtifact(artifactEntity.getId());
-            assertThrows(ArtifactNotFoundException.class, () -> artifactService.getArtifact(artifactEntity.getId()), "Artifact was found.");
+            assertThrows(ArtifactNotFoundException.class, () -> artifactService.getArtifact(artifactEntity.getId()), "Artifact was found after remove");
         }, "Throw exception.");
     }
 }

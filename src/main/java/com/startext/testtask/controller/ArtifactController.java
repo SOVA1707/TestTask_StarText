@@ -47,7 +47,7 @@ public class ArtifactController {
     }
 
     @PostMapping
-    public ResponseEntity setArtifact(@RequestParam UUID id, @RequestBody Artifact artifact) {
+    public ResponseEntity updateArtifact(@RequestParam UUID id, @RequestBody Artifact artifact) {
         ResponseEntity response;
         try {
             response = ResponseEntity.ok(artifactService.updateArtifact(id, artifact));

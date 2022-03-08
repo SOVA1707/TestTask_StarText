@@ -17,9 +17,10 @@ public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
-    public CommentEntity createComment(CommentEntity entity) throws CommentAlreadyExistException {
-        if (!commentRepository.existsById(entity.getId())) {
-            return commentRepository.save(entity);
+    public CommentEntity createComment(CommentEntity comment) throws CommentAlreadyExistException {
+        if (commentRepository.findById(comment.getId()).isEmpty()) {
+            System.out.println(comment.getId());
+            return commentRepository.save(comment);
         } else {
             throw new CommentAlreadyExistException();
         }
@@ -55,5 +56,4 @@ public class CommentService {
             throw new CommentNotFoundException();
         }
     }
-
 }

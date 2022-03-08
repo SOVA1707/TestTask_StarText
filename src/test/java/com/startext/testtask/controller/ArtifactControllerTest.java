@@ -3,6 +3,7 @@ package com.startext.testtask.controller;
 import com.startext.testtask.Factory;
 import com.startext.testtask.entity.ArtifactEntity;
 import com.startext.testtask.service.ArtifactService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
@@ -26,6 +27,7 @@ class ArtifactControllerTest {
     private static ArtifactEntity artifactEntity = Factory.getArtifactEntity();
     private static UUID id = artifactEntity.getId();
 
+    @DisplayName("Create artifact test")
     @Test
     void createArtifact() {
         response = artifactController.createArtifact(artifactEntity);
@@ -36,6 +38,7 @@ class ArtifactControllerTest {
         checkOk();
     }
 
+    @DisplayName("Get artifact test")
     @Test
     void getArtifact() {
         response = artifactController.createArtifact(artifactEntity);
@@ -46,16 +49,18 @@ class ArtifactControllerTest {
         checkOk();
     }
 
+    @DisplayName("Update artifact test")
     @Test
-    void setArtifact() {
+    void updateArtifact() {
         response = artifactController.createArtifact(artifactEntity);
         checkOk();
-        response = artifactController.setArtifact(id, Factory.getArtifact());
+        response = artifactController.updateArtifact(id, Factory.getArtifact());
         checkOk();
         response = artifactController.deleteArtifact(id);
         checkOk();
     }
 
+    @DisplayName("Delete artifact test")
     @Test
     void deleteArtifact() {
         response = artifactController.createArtifact(artifactEntity);
