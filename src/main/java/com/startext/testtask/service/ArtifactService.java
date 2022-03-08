@@ -18,7 +18,7 @@ public class ArtifactService {
     private ArtifactRepository artifactRepository;
 
     public ArtifactEntity createArtifact(ArtifactEntity artifact) throws ArtifactAlreadyExistException {
-        if (!artifactRepository.existsById(artifact.getId())) {
+        if (artifactRepository.findById(artifact.getId()).isEmpty()) {
             return artifactRepository.save(artifact);
         } else {
             throw new ArtifactAlreadyExistException();
@@ -38,6 +38,7 @@ public class ArtifactService {
         Optional<ArtifactEntity> optionalArtifact = artifactRepository.findById(id);
         if (optionalArtifact.isPresent()) {
             ArtifactEntity artifactEntity = optionalArtifact.get();
+            artifactEntity.setUserId(newArtifact.getUserId());
             artifactEntity.setCategory(newArtifact.getCategory());
             artifactEntity.setDescription(newArtifact.getDescription());
             artifactRepository.save(artifactEntity);

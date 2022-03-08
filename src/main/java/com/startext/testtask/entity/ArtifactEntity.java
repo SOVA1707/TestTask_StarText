@@ -12,6 +12,7 @@ public class ArtifactEntity {
     @Id
     @JsonIgnore //mb other annotation
     private UUID id = UUID.randomUUID();
+    @JsonIgnore
     private LocalDateTime created;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String userId;

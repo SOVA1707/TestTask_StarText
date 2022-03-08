@@ -1,5 +1,6 @@
 package com.startext.testtask.controller;
 
+import com.startext.testtask.Factory;
 import com.startext.testtask.entity.ArtifactEntity;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -16,8 +17,7 @@ class ArtifactControllerTest {
     @Autowired
     private ArtifactController artifactController;
 
-    @Mock
-    private ArtifactEntity artifactEntity;
+    private ArtifactEntity artifactEntity = Factory.getArtifactEntity();
 
     @Test
     void createArtifact() {
