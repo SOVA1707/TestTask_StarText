@@ -127,4 +127,35 @@ class ArtifactServiceTest {
         list = artifactService.getAllArtifactsByCommentContent(content);
         assertEquals(list.size(), 4);
     }
+
+    @DisplayName("Check version control")
+    @Test
+    void versionControlCheck() {
+        assertDoesNotThrow(() -> {
+            ArtifactEntity artifact1 = Factory.getArtifactEntity();
+            ArtifactEntity artifact2 = Factory.getArtifactEntity();
+            ArtifactEntity artifact3 = Factory.getArtifactEntity();
+            List<ArtifactEntity> artifacts = new ArrayList<>(Arrays.asList(artifact1, artifact2, artifact3));
+
+            artifactService.createArtifact(artifactEntity);
+
+            for (ArtifactEntity artifact : artifacts) {
+                artifactService.updateArtifact(artifactEntity.getId(), Artifact.toModel(artifact));
+            }
+            artifacts.add(artifactEntity);
+
+            List<ArtifactEntity> previous = artifactService.getPreviousVersions(artifactEntity.getId());
+
+            for (ArtifactEntity prev : previous) {
+                boolean check = false;
+                for (ArtifactEntity artifact : artifacts) {
+                    if (prev.getUserId().equals(artifact.getUserId())) {
+                        check = true;
+                        break;
+                    }
+                }
+                assertTrue(check);
+            }
+        }, "Throw exception.");
+    }
 }

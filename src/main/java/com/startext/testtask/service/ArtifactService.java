@@ -41,6 +41,7 @@ public class ArtifactService {
         Optional<ArtifactEntity> optionalArtifact = artifactRepository.findById(id);
         if (optionalArtifact.isPresent()) {
             ArtifactEntity artifactEntity = optionalArtifact.get();
+            artifactEntity.rememberThisVersion();
             artifactEntity.setUserId(newArtifact.getUserId());
             artifactEntity.setCategory(newArtifact.getCategory());
             artifactEntity.setDescription(newArtifact.getDescription());
@@ -98,5 +99,14 @@ public class ArtifactService {
             }
         });
         return list;
+    }
+
+    public List<ArtifactEntity> getPreviousVersions(UUID id) throws ArtifactNotFoundException {
+        Optional<ArtifactEntity> optionalArtifact = artifactRepository.findById(id);
+        if (optionalArtifact.isPresent()) {
+            return optionalArtifact.get().getPreviousVersions();
+        } else {
+            throw new ArtifactNotFoundException();
+        }
     }
 }

@@ -3,6 +3,9 @@ package com.startext.testtask.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.persistence.Transient;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -17,6 +20,9 @@ public class CommentEntity {
     @ManyToOne
     @JoinColumn(name = "artifact_id")
     private ArtifactEntity artifact;
+
+    @Transient
+    private List<CommentEntity> previousVersions = new ArrayList<>();
 
     public CommentEntity() {
     }
@@ -52,5 +58,29 @@ public class CommentEntity {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Transient
+    public List<CommentEntity> getPreviousVersions() {
+        return previousVersions;
+    }
+
+    @Transient
+    public void setPreviousVersions(List<CommentEntity> previousVersions) {
+        this.previousVersions = previousVersions;
+    }
+
+    @Transient
+    public void rememberThisVersion() {
+        previousVersions.add(clone());
+    }
+
+    public CommentEntity clone() {
+        CommentEntity commentEntity = new CommentEntity();
+        commentEntity.id = new UUID(id.getMostSignificantBits(), id.getLeastSignificantBits());
+        commentEntity.userId = userId + "";
+        commentEntity.content = content + "";
+        commentEntity.artifact = artifact;
+        return  commentEntity;
     }
 }
