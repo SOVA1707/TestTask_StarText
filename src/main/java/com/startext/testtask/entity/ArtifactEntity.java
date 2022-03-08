@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -18,6 +19,17 @@ public class ArtifactEntity {
     private String userId;
     private String category;
     private String description;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "artifact")
+    private List<CommentEntity> comments;
+
+    public List<CommentEntity> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentEntity> comments) {
+        this.comments = comments;
+    }
 
     public ArtifactEntity() {
         created = LocalDateTime.now();

@@ -1,6 +1,7 @@
 package com.startext.testtask.service;
 
 import com.startext.testtask.entity.ArtifactEntity;
+import com.startext.testtask.entity.CommentEntity;
 import com.startext.testtask.exception.ArtifactAlreadyExistException;
 import com.startext.testtask.exception.ArtifactNotFoundException;
 import com.startext.testtask.model.Artifact;
@@ -8,6 +9,8 @@ import com.startext.testtask.repository.ArtifactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -56,5 +59,44 @@ public class ArtifactService {
         } else {
             throw new ArtifactNotFoundException();
         }
+    }
+
+    public List<Artifact> getAllArtifactsByCategory(String category) {
+        List<Artifact> list = new ArrayList<>();
+        artifactRepository.findAll().forEach(e -> {
+            if (e.getCategory().equals(category))
+                list.add(Artifact.toModel(e));
+        });
+        return list;
+    }
+
+    public List<Artifact> getAllArtifactsByUserId(String userId) {
+        List<Artifact> list = new ArrayList<>();
+        artifactRepository.findAll().forEach(e -> {
+            if (e.getUserId().equals(userId))
+                list.add(Artifact.toModel(e));
+        });
+        return list;
+    }
+
+    public List<Artifact> getAllArtifactsByDescription(String description) {
+        List<Artifact> list = new ArrayList<>();
+        artifactRepository.findAll().forEach(e -> {
+            if (e.getDescription().equals(description))
+                list.add(Artifact.toModel(e));
+        });
+        return list;
+    }
+
+    public List<Artifact> getAllArtifactsByCommentContent(String content) {
+        List<Artifact> list = new ArrayList<>();
+        artifactRepository.findAll().forEach(e -> {
+            for (CommentEntity comment : e.getComments()) {
+                if (comment.getContent().equals(content)) {
+                    list.add(Artifact.toModel(e));
+                }
+            }
+        });
+        return list;
     }
 }

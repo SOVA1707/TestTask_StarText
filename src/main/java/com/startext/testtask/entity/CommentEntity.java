@@ -11,11 +11,23 @@ public class CommentEntity {
     @Id
     @JsonIgnore
     private UUID id = UUID.randomUUID();
-    private UUID artifactId;
     private String userId;
     private String content;
 
+    @ManyToOne
+    @JoinColumn(name = "artifact_id")
+    private ArtifactEntity artifact;
+
     public CommentEntity() {
+    }
+
+    public ArtifactEntity getArtifact() {
+        return artifact;
+    }
+
+    public void setArtifact(ArtifactEntity artifact) {
+        this.artifact = artifact;
+        this.userId = artifact.getUserId();
     }
 
     public UUID getId() {
@@ -24,14 +36,6 @@ public class CommentEntity {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public UUID getArtifactId() {
-        return artifactId;
-    }
-
-    public void setArtifactId(UUID artifactId) {
-        this.artifactId = artifactId;
     }
 
     public String getUserId() {
