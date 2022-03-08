@@ -26,10 +26,6 @@ public class ArtifactService {
     }
 
     public Artifact getArtifact(UUID id) throws ArtifactNotFoundException {
-        //If findBySuuid() is executed first, then findById will be executed.
-        //Otherwise, findById() will not find anything.
-        //Check uuid id annotation.
-        artifactRepository.findBySuuid(id.toString());
         Optional<ArtifactEntity> optionalArtifact = artifactRepository.findById(id);
         if (optionalArtifact.isPresent()) {
             return Artifact.toModel(optionalArtifact.get());
@@ -39,13 +35,11 @@ public class ArtifactService {
     }
 
     public Artifact updateArtifact(UUID id, Artifact newArtifact) throws ArtifactNotFoundException {
-        artifactRepository.findBySuuid(id.toString());
         Optional<ArtifactEntity> optionalArtifact = artifactRepository.findById(id);
         if (optionalArtifact.isPresent()) {
             ArtifactEntity artifactEntity = optionalArtifact.get();
             artifactEntity.setCategory(newArtifact.getCategory());
             artifactEntity.setDescription(newArtifact.getDescription());
-            // HHH000010: On release of batch it still contained JDBC statements
             artifactRepository.save(artifactEntity);
             return Artifact.toModel(artifactEntity);
         } else {
@@ -56,7 +50,6 @@ public class ArtifactService {
     public Artifact deleteArtifact(UUID id) throws ArtifactNotFoundException {
         Optional<ArtifactEntity> optionalArtifact = artifactRepository.findById(id);
         if (optionalArtifact.isPresent()) {
-            // HHH000010: On release of batch it still contained JDBC statements
             artifactRepository.deleteById(id);
             return Artifact.toModel(optionalArtifact.get());
         } else {

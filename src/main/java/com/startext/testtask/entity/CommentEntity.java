@@ -15,7 +15,6 @@ public class CommentEntity {
 
     public CommentEntity(UUID artifactId) {
         this.artifactId = artifactId;
-//        userId =
     }
 
     public UUID getId() {
