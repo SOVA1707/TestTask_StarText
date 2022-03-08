@@ -1,11 +1,9 @@
 package com.startext.testtask.service;
 
 import com.startext.testtask.Factory;
-import com.startext.testtask.entity.ArtifactEntity;
 import com.startext.testtask.entity.CommentEntity;
 import com.startext.testtask.exception.CommentAlreadyExistException;
 import com.startext.testtask.exception.CommentNotFoundException;
-import com.startext.testtask.model.Artifact;
 import com.startext.testtask.model.Comment;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

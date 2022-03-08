@@ -72,7 +72,7 @@ class ArtifactServiceTest {
         }, "Throw exception.");
     }
 
-    @DisplayName("Get all artifacts by category,userId, description and comment content test")
+    @DisplayName("Get all artifacts tests")
     @Test
     void getAllArtifactsBy() {
         String category = "category 1";
