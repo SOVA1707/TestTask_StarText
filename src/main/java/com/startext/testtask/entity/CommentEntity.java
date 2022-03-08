@@ -24,12 +24,24 @@ public class CommentEntity {
         return id;
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public UUID getArtifactId() {
         return artifactId;
     }
 
+    public void setArtifactId(UUID artifactId) {
+        this.artifactId = artifactId;
+    }
+
     public String getUserId() {
         return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getContent() {
