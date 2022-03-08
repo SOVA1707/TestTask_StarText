@@ -11,9 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -157,5 +155,34 @@ class ArtifactServiceTest {
                 assertTrue(check);
             }
         }, "Throw exception.");
+    }
+
+    @DisplayName("Sort artifacts test")
+    @Test
+    void sortArtifacts() throws InterruptedException {
+        ArtifactEntity artifactEntity1 = Factory.getArtifactEntity();
+        Thread.sleep(100);
+        ArtifactEntity artifactEntity2 = Factory.getArtifactEntity();
+        Thread.sleep(100);
+        ArtifactEntity artifactEntity3 = Factory.getArtifactEntity();
+        Thread.sleep(100);
+        ArtifactEntity artifactEntity4 = Factory.getArtifactEntity();
+
+        List<ArtifactEntity> artifacts = new ArrayList<>();
+        artifacts.add(artifactEntity3);
+        artifacts.add(artifactEntity1);
+        artifacts.add(artifactEntity4);
+        artifacts.add(artifactEntity2);
+
+        List<ArtifactEntity> sortedArtifacts = new ArrayList<>(artifacts);
+        sortedArtifacts.sort(Comparator.comparing(ArtifactEntity::getCreated));
+
+        artifactService.sortByCreated(artifacts);
+
+        for (int i = 0; i < artifacts.size(); i++) {
+            ArtifactEntity artifact = artifacts.get(i);
+            ArtifactEntity sortedArtifact = sortedArtifacts.get(i);
+            assertEquals(artifact.getCreated(), sortedArtifact.getCreated());
+        }
     }
 }

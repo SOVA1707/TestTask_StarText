@@ -9,10 +9,7 @@ import com.startext.testtask.repository.ArtifactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ArtifactService {
@@ -108,5 +105,9 @@ public class ArtifactService {
         } else {
             throw new ArtifactNotFoundException();
         }
+    }
+
+    public void sortByCreated(List<ArtifactEntity> list) {
+        list.sort(Comparator.comparing(ArtifactEntity::getCreated));
     }
 }
