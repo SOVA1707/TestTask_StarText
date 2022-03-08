@@ -110,4 +110,12 @@ public class ArtifactService {
     public void sortByCreated(List<ArtifactEntity> list) {
         list.sort(Comparator.comparing(ArtifactEntity::getCreated));
     }
+
+    public void sortByCategory(List<ArtifactEntity> list) {
+        list.sort(Comparator.comparing(ArtifactEntity::getCategory));
+    }
+
+    public void sortByUserId(List<ArtifactEntity> list) {
+        list.sort(Comparator.comparing(ArtifactEntity::getUserId));
+    }
 }

@@ -161,12 +161,16 @@ class ArtifactServiceTest {
     @Test
     void sortArtifacts() throws InterruptedException {
         ArtifactEntity artifactEntity1 = Factory.getArtifactEntity();
+        artifactEntity1.setCategory("category 1");
         Thread.sleep(100);
         ArtifactEntity artifactEntity2 = Factory.getArtifactEntity();
+        artifactEntity2.setCategory("category asd");
         Thread.sleep(100);
         ArtifactEntity artifactEntity3 = Factory.getArtifactEntity();
+        artifactEntity3.setCategory("category 15");
         Thread.sleep(100);
         ArtifactEntity artifactEntity4 = Factory.getArtifactEntity();
+        artifactEntity4.setCategory("category 4");
 
         List<ArtifactEntity> artifacts = new ArrayList<>();
         artifacts.add(artifactEntity3);
@@ -175,14 +179,38 @@ class ArtifactServiceTest {
         artifacts.add(artifactEntity2);
 
         List<ArtifactEntity> sortedArtifacts = new ArrayList<>(artifacts);
-        sortedArtifacts.sort(Comparator.comparing(ArtifactEntity::getCreated));
 
+        sortedArtifacts.sort(Comparator.comparing(ArtifactEntity::getCreated));
         artifactService.sortByCreated(artifacts);
 
+        System.out.println("---Created---");
         for (int i = 0; i < artifacts.size(); i++) {
             ArtifactEntity artifact = artifacts.get(i);
             ArtifactEntity sortedArtifact = sortedArtifacts.get(i);
+            System.out.println(artifact.getCreated());
             assertEquals(artifact.getCreated(), sortedArtifact.getCreated());
+        }
+
+        sortedArtifacts.sort(Comparator.comparing(ArtifactEntity::getCategory));
+        artifactService.sortByCategory(artifacts);
+
+        System.out.println("---Category---");
+        for (int i = 0; i < artifacts.size(); i++) {
+            ArtifactEntity artifact = artifacts.get(i);
+            ArtifactEntity sortedArtifact = sortedArtifacts.get(i);
+            System.out.println(artifact.getCategory());
+            assertEquals(artifact.getCategory(), sortedArtifact.getCategory());
+        }
+
+        sortedArtifacts.sort(Comparator.comparing(ArtifactEntity::getUserId));
+        artifactService.sortByUserId(artifacts);
+
+        System.out.println("---UserId---");
+        for (int i = 0; i < artifacts.size(); i++) {
+            ArtifactEntity artifact = artifacts.get(i);
+            ArtifactEntity sortedArtifact = sortedArtifacts.get(i);
+            System.out.println(artifact.getUserId());
+            assertEquals(artifact.getCategory(), sortedArtifact.getCategory());
         }
     }
 }
