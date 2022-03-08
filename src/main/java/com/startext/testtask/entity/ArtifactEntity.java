@@ -1,13 +1,11 @@
 package com.startext.testtask.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
+@Table(name = "artifacts")
 public class ArtifactEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
