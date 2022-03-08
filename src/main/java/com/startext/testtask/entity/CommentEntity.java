@@ -10,7 +10,7 @@ import java.util.UUID;
 public class CommentEntity {
     @Id
     @JsonIgnore
-    private UUID id;
+    private UUID id = UUID.randomUUID();
     private UUID artifactId;
     private String userId;
     private String content;

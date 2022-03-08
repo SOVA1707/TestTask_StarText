@@ -10,7 +10,7 @@ import java.util.UUID;
 @Table(name = "artifacts")
 public class ArtifactEntity {
     @Id
-    @JsonIgnore //mb other annotation
+    @JsonIgnore
     private UUID id = UUID.randomUUID();
     @JsonIgnore
     private LocalDateTime created;
