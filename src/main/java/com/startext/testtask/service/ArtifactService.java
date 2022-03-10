@@ -18,45 +18,30 @@ public class ArtifactService {
     private ArtifactRepository artifactRepository;
 
     public ArtifactEntity createArtifact(ArtifactEntity artifact) throws ArtifactAlreadyExistException {
-        if (artifactRepository.findById(artifact.getId()).isEmpty()) {
+        if (artifactRepository.findById(artifact.getId()).isEmpty())
             return artifactRepository.save(artifact);
-        } else {
-            throw new ArtifactAlreadyExistException();
-        }
+        throw new ArtifactAlreadyExistException();
     }
 
     public Artifact getArtifact(UUID id) throws ArtifactNotFoundException {
-        Optional<ArtifactEntity> optionalArtifact = artifactRepository.findById(id);
-        if (optionalArtifact.isPresent()) {
-            return Artifact.toModel(optionalArtifact.get());
-        } else {
-            throw new ArtifactNotFoundException();
-        }
+        return Artifact.toModel(artifactRepository.findById(id).orElseThrow(ArtifactNotFoundException::new));
+
     }
 
     public Artifact updateArtifact(UUID id, Artifact newArtifact) throws ArtifactNotFoundException {
-        Optional<ArtifactEntity> optionalArtifact = artifactRepository.findById(id);
-        if (optionalArtifact.isPresent()) {
-            ArtifactEntity artifactEntity = optionalArtifact.get();
-            artifactEntity.rememberThisVersion();
-            artifactEntity.setUserId(newArtifact.getUserId());
-            artifactEntity.setCategory(newArtifact.getCategory());
-            artifactEntity.setDescription(newArtifact.getDescription());
-            artifactRepository.save(artifactEntity);
-            return Artifact.toModel(artifactEntity);
-        } else {
-            throw new ArtifactNotFoundException();
-        }
+        ArtifactEntity artifactEntity = artifactRepository.findById(id).orElseThrow(ArtifactNotFoundException::new);
+        artifactEntity.rememberThisVersion();
+        artifactEntity.setUserId(newArtifact.getUserId());
+        artifactEntity.setCategory(newArtifact.getCategory());
+        artifactEntity.setDescription(newArtifact.getDescription());
+        artifactRepository.save(artifactEntity);
+        return Artifact.toModel(artifactEntity);
     }
 
     public Artifact deleteArtifact(UUID id) throws ArtifactNotFoundException {
-        Optional<ArtifactEntity> optionalArtifact = artifactRepository.findById(id);
-        if (optionalArtifact.isPresent()) {
-            artifactRepository.deleteById(id);
-            return Artifact.toModel(optionalArtifact.get());
-        } else {
-            throw new ArtifactNotFoundException();
-        }
+        ArtifactEntity artifactEntity = artifactRepository.findById(id).orElseThrow(ArtifactNotFoundException::new);
+        artifactRepository.delete(artifactEntity);
+        return Artifact.toModel(artifactEntity);
     }
 
     public List<Artifact> getAllArtifactsByCategory(String category) {
