@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -19,51 +18,30 @@ public class CommentService {
     private CommentRepository commentRepository;
 
     public CommentEntity createComment(CommentEntity comment) throws CommentAlreadyExistException {
-        if (commentRepository.findById(comment.getId()).isEmpty()) {
+        if (commentRepository.findById(comment.getId()).isEmpty())
             return commentRepository.save(comment);
-        } else {
-            throw new CommentAlreadyExistException();
-        }
+        throw new CommentAlreadyExistException();
     }
 
     public Comment getComment(UUID id) throws CommentNotFoundException {
-        Optional<CommentEntity> optionalComment = commentRepository.findById(id);
-        if (optionalComment.isPresent()) {
-            return Comment.toModel(optionalComment.get());
-        } else {
-            throw new CommentNotFoundException();
-        }
+        return Comment.toModel(commentRepository.findById(id).orElseThrow(CommentNotFoundException::new));
     }
 
     public Comment updateComment(UUID id, Comment newComment) throws CommentNotFoundException {
-        Optional<CommentEntity> optionalComment = commentRepository.findById(id);
-        if (optionalComment.isPresent()) {
-            CommentEntity commentEntity = optionalComment.get();
-            commentEntity.rememberThisVersion();
-            commentEntity.setContent(newComment.getContent());
-            commentRepository.save(commentEntity);
-            return Comment.toModel(commentEntity);
-        } else {
-            throw new CommentNotFoundException();
-        }
+        CommentEntity commentEntity = commentRepository.findById(id).orElseThrow(CommentNotFoundException::new);
+        commentEntity.rememberThisVersion();
+        commentEntity.setContent(newComment.getContent());
+        commentRepository.save(commentEntity);
+        return Comment.toModel(commentEntity);
     }
 
     public Comment deleteComment(UUID id) throws CommentNotFoundException {
-        Optional<CommentEntity> optionalComment = commentRepository.findById(id);
-        if (optionalComment.isPresent()) {
-            commentRepository.deleteById(id);
-            return Comment.toModel(optionalComment.get());
-        } else {
-            throw new CommentNotFoundException();
-        }
+        CommentEntity commentEntity = commentRepository.findById(id).orElseThrow(CommentNotFoundException::new);
+        commentRepository.delete(commentEntity);
+        return Comment.toModel(commentEntity);
     }
 
     public List<CommentEntity> getPreviousVersions(UUID id) throws CommentNotFoundException {
-        Optional<CommentEntity> optionalComment = commentRepository.findById(id);
-        if (optionalComment.isPresent()) {
-            return optionalComment.get().getPreviousVersions();
-        } else {
-            throw new CommentNotFoundException();
-        }
+        return commentRepository.findById(id).orElseThrow(CommentNotFoundException::new).getPreviousVersions();
     }
 }
