@@ -29,7 +29,6 @@ public class CommentEntity {
 
     public void setArtifact(ArtifactEntity artifact) {
         this.artifact = artifact;
-        this.userId = artifact.getUserId();
     }
 
     public UUID getId() {

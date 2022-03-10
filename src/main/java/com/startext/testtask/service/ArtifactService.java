@@ -74,8 +74,4 @@ public class ArtifactService {
     public void sortByUserId(List<ArtifactEntity> list) {
         list.sort(Comparator.comparing(ArtifactEntity::getUserId));
     }
-
-    public ArtifactEntity getFirst() {
-        return artifactRepository.findAll().iterator().next();
-    }
 }

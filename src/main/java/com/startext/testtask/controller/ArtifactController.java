@@ -1,6 +1,5 @@
 package com.startext.testtask.controller;
 
-import com.startext.testtask.entity.ArtifactEntity;
 import com.startext.testtask.exception.ArtifactAlreadyExistException;
 import com.startext.testtask.exception.ArtifactNotFoundException;
 import com.startext.testtask.model.Artifact;
@@ -23,8 +22,7 @@ public class ArtifactController {
     public ResponseEntity createArtifact(@RequestBody ArtifactCreationDTO artifact) {
         ResponseEntity response;
         try {
-            artifactService.createArtifact(ArtifactCreationDTO.fromModel(artifact));
-            response = ResponseEntity.ok("Artifact successful created.");
+            response = ResponseEntity.ok(artifactService.createArtifact(ArtifactCreationDTO.fromModel(artifact)).getId());
         } catch (ArtifactAlreadyExistException e) {
             response = ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
@@ -71,9 +69,5 @@ public class ArtifactController {
             response = ResponseEntity.badRequest().body("Error on delete artifact.");
         }
         return response;
-    }
-
-    public ArtifactEntity getFirst() {
-        return artifactService.getFirst();
     }
 }

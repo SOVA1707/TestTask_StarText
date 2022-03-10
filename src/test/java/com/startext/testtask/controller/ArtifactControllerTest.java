@@ -31,7 +31,7 @@ class ArtifactControllerTest {
     @Test
     void createArtifact() {
         response = artifactController.createArtifact(artifactCreationDTO);
-        updateId();
+        id = (UUID) response.getBody();
         checkOk();
         response = artifactController.deleteArtifact(id);
         checkOk();
@@ -41,7 +41,7 @@ class ArtifactControllerTest {
     @Test
     void getArtifact() {
         response = artifactController.createArtifact(artifactCreationDTO);
-        updateId();
+        id = (UUID) response.getBody();
         checkOk();
         response = artifactController.getArtifact(id);
         checkOk();
@@ -53,7 +53,7 @@ class ArtifactControllerTest {
     @Test
     void updateArtifact() {
         response = artifactController.createArtifact(artifactCreationDTO);
-        updateId();
+        id = (UUID) response.getBody();
         checkOk();
         response = artifactController.updateArtifact(id, Factory.getArtifact());
         checkOk();
@@ -65,7 +65,7 @@ class ArtifactControllerTest {
     @Test
     void deleteArtifact() {
         response = artifactController.createArtifact(artifactCreationDTO);
-        updateId();
+        id = (UUID) response.getBody();
         checkOk();
         response = artifactController.deleteArtifact(id);
         checkOk();
@@ -79,9 +79,5 @@ class ArtifactControllerTest {
 
     private static void checkBad() {
         assertEquals(response.getStatusCodeValue(), HttpStatus.BAD_REQUEST.value());
-    }
-
-    private void updateId() {
-        id = artifactController.getFirst().getId();
     }
 }
