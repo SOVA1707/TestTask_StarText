@@ -8,6 +8,7 @@ public class Comment {
 
     public static Comment toModel(CommentEntity comment) {
         Comment model = new Comment();
+        model.setUserId(comment.getUserId());
         model.setContent(comment.getContent());
         return model;
     }
