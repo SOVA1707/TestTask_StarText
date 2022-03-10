@@ -1,6 +1,5 @@
 package com.startext.testtask.controller;
 
-import com.startext.testtask.entity.CommentEntity;
 import com.startext.testtask.exception.CommentAlreadyExistException;
 import com.startext.testtask.exception.CommentNotFoundException;
 import com.startext.testtask.model.Comment;
