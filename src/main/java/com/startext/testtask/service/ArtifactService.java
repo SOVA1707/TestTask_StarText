@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ArtifactService {
@@ -71,7 +72,7 @@ public class ArtifactService {
     }
 
     public List<ArtifactEntity> getAllArtifactsByCommentContent(String content) {
-        return artifactRepository.findAllByCommentsContent(content);
+        return artifactRepository.findAllByCommentsContent(content).stream().distinct().collect(Collectors.toList());
     }
 
     public List<ArtifactEntity> getPreviousVersions(UUID id) throws ArtifactNotFoundException {
