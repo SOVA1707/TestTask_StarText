@@ -1,7 +1,6 @@
 package com.startext.testtask.service;
 
 import com.startext.testtask.entity.ArtifactEntity;
-import com.startext.testtask.entity.CommentEntity;
 import com.startext.testtask.exception.ArtifactAlreadyExistException;
 import com.startext.testtask.exception.ArtifactNotFoundException;
 import com.startext.testtask.model.Artifact;
@@ -59,43 +58,20 @@ public class ArtifactService {
         }
     }
 
-    public List<Artifact> getAllArtifactsByCategory(String category) {
-        List<Artifact> list = new ArrayList<>();
-        artifactRepository.findAll().forEach(e -> {
-            if (e.getCategory().equals(category))
-                list.add(Artifact.toModel(e));
-        });
-        return list;
+    public List<ArtifactEntity> getAllArtifactsByCategory(String category) {
+        return artifactRepository.findAllByCategory(category);
     }
 
-    public List<Artifact> getAllArtifactsByUserId(String userId) {
-        List<Artifact> list = new ArrayList<>();
-        artifactRepository.findAll().forEach(e -> {
-            if (e.getUserId().equals(userId))
-                list.add(Artifact.toModel(e));
-        });
-        return list;
+    public List<ArtifactEntity> getAllArtifactsByUserId(String userId) {
+        return artifactRepository.findAllByUserId(userId);
     }
 
-    public List<Artifact> getAllArtifactsByDescription(String description) {
-        List<Artifact> list = new ArrayList<>();
-        artifactRepository.findAll().forEach(e -> {
-            if (e.getDescription().equals(description))
-                list.add(Artifact.toModel(e));
-        });
-        return list;
+    public List<ArtifactEntity> getAllArtifactsByDescription(String description) {
+        return artifactRepository.findAllByDescription(description);
     }
 
-    public List<Artifact> getAllArtifactsByCommentContent(String content) {
-        List<Artifact> list = new ArrayList<>();
-        artifactRepository.findAll().forEach(e -> {
-            for (CommentEntity comment : e.getComments()) {
-                if (comment.getContent().equals(content)) {
-                    list.add(Artifact.toModel(e));
-                }
-            }
-        });
-        return list;
+    public List<ArtifactEntity> getAllArtifactsByCommentContent(String content) {
+        return artifactRepository.findAllByCommentsContent(content);
     }
 
     public List<ArtifactEntity> getPreviousVersions(UUID id) throws ArtifactNotFoundException {

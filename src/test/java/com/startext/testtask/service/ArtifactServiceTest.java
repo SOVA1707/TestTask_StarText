@@ -81,7 +81,7 @@ class ArtifactServiceTest {
         String content = "my content";
 
         CommentEntity commentEntity1 = Factory.getCommentEntity();
-        commentEntity1.setContent("AINFWA");
+        commentEntity1.setContent(content);
         CommentEntity commentEntity2 = Factory.getCommentEntity();
         commentEntity2.setContent(content);
         CommentEntity commentEntity3 = Factory.getCommentEntity();
@@ -92,6 +92,8 @@ class ArtifactServiceTest {
         ArtifactEntity artifactEntity1 = Factory.getArtifactEntity();
         artifactEntity1.setCategory(category);
         artifactEntity1.setUserId(userId);
+        commentEntity1.setArtifact(artifactEntity1);
+        commentEntity2.setArtifact(artifactEntity1);
         artifactEntity1.setComments(new ArrayList<>(comments));
         ArtifactEntity artifactEntity2 = Factory.getArtifactEntity();
         artifactEntity2.setCategory(category);
@@ -105,6 +107,7 @@ class ArtifactServiceTest {
         artifactEntity4.setCategory("category 4");
         artifactEntity4.setComments(new ArrayList<>(comments));
 
+
         assertDoesNotThrow(() -> {
             artifactService.createArtifact(artifactEntity1);
             artifactService.createArtifact(artifactEntity2);
@@ -112,7 +115,7 @@ class ArtifactServiceTest {
             artifactService.createArtifact(artifactEntity4);
         }, "Throw error");
 
-        List<Artifact> list;
+        List<ArtifactEntity> list;
         list = artifactService.getAllArtifactsByCategory(category);
         assertEquals(list.size(), 3);
 
@@ -123,7 +126,7 @@ class ArtifactServiceTest {
         assertEquals(list.size(), 1);
 
         list = artifactService.getAllArtifactsByCommentContent(content);
-        assertEquals(list.size(), 4);
+        assertEquals(list.size(), 1);
     }
 
     @DisplayName("Check version control")
