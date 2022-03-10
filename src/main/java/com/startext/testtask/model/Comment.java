@@ -3,6 +3,7 @@ package com.startext.testtask.model;
 import com.startext.testtask.entity.CommentEntity;
 
 public class Comment {
+    private String userId;
     private String content;
 
     public static Comment toModel(CommentEntity comment) {
@@ -12,6 +13,14 @@ public class Comment {
     }
 
     public Comment() {
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getContent() {

@@ -1,7 +1,7 @@
 package com.startext.testtask.controller;
 
 import com.startext.testtask.Factory;
-import com.startext.testtask.entity.ArtifactEntity;
+import com.startext.testtask.model.ArtifactCreationDTO;
 import com.startext.testtask.service.ArtifactService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,16 +24,15 @@ class ArtifactControllerTest {
 
     private static ResponseEntity response;
 
-    private static ArtifactEntity artifactEntity = Factory.getArtifactEntity();
-    private static UUID id = artifactEntity.getId();
+    private static UUID id;
+    private static ArtifactCreationDTO artifactCreationDTO = new ArtifactCreationDTO();
 
     @DisplayName("Create artifact test")
     @Test
     void createArtifact() {
-        response = artifactController.createArtifact(artifactEntity);
+        response = artifactController.createArtifact(artifactCreationDTO);
+        id = (UUID) response.getBody();
         checkOk();
-        response = artifactController.createArtifact(artifactEntity);
-        checkBad();
         response = artifactController.deleteArtifact(id);
         checkOk();
     }
@@ -41,7 +40,8 @@ class ArtifactControllerTest {
     @DisplayName("Get artifact test")
     @Test
     void getArtifact() {
-        response = artifactController.createArtifact(artifactEntity);
+        response = artifactController.createArtifact(artifactCreationDTO);
+        id = (UUID) response.getBody();
         checkOk();
         response = artifactController.getArtifact(id);
         checkOk();
@@ -52,7 +52,8 @@ class ArtifactControllerTest {
     @DisplayName("Update artifact test")
     @Test
     void updateArtifact() {
-        response = artifactController.createArtifact(artifactEntity);
+        response = artifactController.createArtifact(artifactCreationDTO);
+        id = (UUID) response.getBody();
         checkOk();
         response = artifactController.updateArtifact(id, Factory.getArtifact());
         checkOk();
@@ -63,7 +64,8 @@ class ArtifactControllerTest {
     @DisplayName("Delete artifact test")
     @Test
     void deleteArtifact() {
-        response = artifactController.createArtifact(artifactEntity);
+        response = artifactController.createArtifact(artifactCreationDTO);
+        id = (UUID) response.getBody();
         checkOk();
         response = artifactController.deleteArtifact(id);
         checkOk();

@@ -1,7 +1,7 @@
 package com.startext.testtask.controller;
 
 import com.startext.testtask.Factory;
-import com.startext.testtask.entity.CommentEntity;
+import com.startext.testtask.model.CommentCreationDTO;
 import com.startext.testtask.service.CommentService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,19 +22,17 @@ class CommentControllerTest {
     @SpyBean
     private CommentController commentController;
 
-
     private static ResponseEntity response;
 
-    private static CommentEntity commentEntity = Factory.getCommentEntity();
-    private static UUID id = commentEntity.getId();
+    private static CommentCreationDTO comment = new CommentCreationDTO();
+    private static UUID id;
 
     @DisplayName("Create comment test")
     @Test
     void createComment() {
-        response = commentController.createComment(commentEntity);
+        response = commentController.createComment(comment);
+        id = (UUID) response.getBody();
         checkOk();
-        response = commentController.createComment(commentEntity);
-        checkBad();
         response = commentController.deleteComment(id);
         checkOk();
     }
@@ -42,7 +40,8 @@ class CommentControllerTest {
     @DisplayName("Get comment test")
     @Test
     void getComment() {
-        response = commentController.createComment(commentEntity);
+        response = commentController.createComment(comment);
+        id = (UUID) response.getBody();
         checkOk();
         response = commentController.getComment(id);
         checkOk();
@@ -53,7 +52,8 @@ class CommentControllerTest {
     @DisplayName("Update comment test")
     @Test
     void updateComment() {
-        response = commentController.createComment(commentEntity);
+        response = commentController.createComment(comment);
+        id = (UUID) response.getBody();
         checkOk();
         response = commentController.updateComment(id, Factory.getComment());
         checkOk();
@@ -64,7 +64,8 @@ class CommentControllerTest {
     @DisplayName("Delete comment test")
     @Test
     void deleteComment() {
-        response = commentController.createComment(commentEntity);
+        response = commentController.createComment(comment);
+        id = (UUID) response.getBody();
         checkOk();
         response = commentController.deleteComment(id);
         checkOk();

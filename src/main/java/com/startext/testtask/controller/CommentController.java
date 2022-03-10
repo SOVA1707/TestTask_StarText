@@ -4,6 +4,7 @@ import com.startext.testtask.entity.CommentEntity;
 import com.startext.testtask.exception.CommentAlreadyExistException;
 import com.startext.testtask.exception.CommentNotFoundException;
 import com.startext.testtask.model.Comment;
+import com.startext.testtask.model.CommentCreationDTO;
 import com.startext.testtask.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +20,10 @@ public class CommentController {
     private CommentService commentService;
 
     @PutMapping
-    public ResponseEntity createComment(@RequestBody CommentEntity commentEntity) {
+    public ResponseEntity createComment(@RequestBody CommentCreationDTO comment) {
         ResponseEntity response;
         try {
-            commentService.createComment(commentEntity);
-            response = ResponseEntity.ok("Comment successful created");
+            response = ResponseEntity.ok(commentService.createComment(CommentCreationDTO.fromModel(comment)).getId());
         } catch (CommentAlreadyExistException e) {
             response = ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
