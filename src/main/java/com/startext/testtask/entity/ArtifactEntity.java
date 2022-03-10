@@ -1,7 +1,5 @@
 package com.startext.testtask.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,10 +10,8 @@ import java.util.UUID;
 @Table(name = "artifacts")
 public class ArtifactEntity {
     @Id
-    @JsonIgnore
     private UUID id = UUID.randomUUID();
-    @JsonIgnore
-    private LocalDateTime created;
+    private LocalDateTime created = LocalDateTime.now();
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String userId;
     private String category;
@@ -27,16 +23,16 @@ public class ArtifactEntity {
     @Transient
     private List<ArtifactEntity> previousVersions = new ArrayList<>();
 
+    public ArtifactEntity() {
+
+    }
+
     public List<CommentEntity> getComments() {
         return comments;
     }
 
     public void setComments(List<CommentEntity> comments) {
         this.comments = comments;
-    }
-
-    public ArtifactEntity() {
-        created = LocalDateTime.now();
     }
 
     public UUID getId() {

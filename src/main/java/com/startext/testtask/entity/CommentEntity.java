@@ -1,7 +1,5 @@
 package com.startext.testtask.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +9,6 @@ import java.util.UUID;
 @Table(name = "comments")
 public class CommentEntity {
     @Id
-    @JsonIgnore
     private UUID id = UUID.randomUUID();
     private String userId;
     private String content;
