@@ -25,7 +25,6 @@ public class ArtifactService {
 
     public Artifact getArtifact(UUID id) throws ArtifactNotFoundException {
         return Artifact.toModel(artifactRepository.findById(id).orElseThrow(ArtifactNotFoundException::new));
-
     }
 
     public Artifact updateArtifact(UUID id, Artifact newArtifact) throws ArtifactNotFoundException {
@@ -84,12 +83,7 @@ public class ArtifactService {
     }
 
     public List<ArtifactEntity> getPreviousVersions(UUID id) throws ArtifactNotFoundException {
-        Optional<ArtifactEntity> optionalArtifact = artifactRepository.findById(id);
-        if (optionalArtifact.isPresent()) {
-            return optionalArtifact.get().getPreviousVersions();
-        } else {
-            throw new ArtifactNotFoundException();
-        }
+        return artifactRepository.findById(id).orElseThrow(ArtifactNotFoundException::new).getPreviousVersions();
     }
 
     public void sortByCreated(List<ArtifactEntity> list) {
